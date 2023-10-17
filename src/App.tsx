@@ -1,41 +1,21 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 import HomePage from "./components/HomePage";
-import { ReactNode } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
-
-// import api from "./http/api";
-
-// import { useEffect } from "react";
-// import { apiUrlLogin } from "./http/apiUrl";
-// import React from "react";
+import AuthLayout from "./components/AuthLayout";
+import MainLayout from "./components/MainLayout";
 
 export default function App() {
-  // const Login =async () => {
-  //   const res = await api.post(apiUrlLogin, {
-  //     email: "user@example.com",
-  //     password: "asdfghjkl"
-  //   })
-
-  //   console.log(res)
-  // }
-
-  // useEffect(() => {
-  //   Login()
-  // }, [])
-
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+    <Routes>
+      <Route path="/login" element={<AuthLayout />}>
+        <Route index element={<LoginPage />} />
+      </Route>
+      <Route path="/register" element={<AuthLayout />}>
+        <Route index element={<RegisterPage />} />
+      </Route>
+      <Route path="/" element={<MainLayout />}>
         <Route
           path="/"
           element={
@@ -44,7 +24,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-      </Routes>
-    </Router>
+      </Route>
+    </Routes>
   );
 }
